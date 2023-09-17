@@ -11,7 +11,7 @@ def Print2():
         name_new2 = input("Введите Имя: ").title()
         tel_new = input("Введите телефон: ")
         string_new = name_new1, name_new2, tel_new
-        file_data.write(f"\n {string_new}")
+        file_data.write("\n"+name_new1+", "+name_new2+", "+tel_new)
 def Print3():
     file_data = Path("Telephone_directory.txt")
     with open (file_data , "r", encoding="UTF-8") as file_data:
@@ -25,28 +25,29 @@ def Print3():
         if s:
             print("Такого кантакта нет")
 def Print4():
-    file_data = Path("Telephone_directory.txt")
+    f= Path("Telephone_directory.txt")
     update_name1 = input("Введите имя контакта который хотите изменить: ")
     update_name2 = input("Введите фамилию контакта который хотите изменить: ")
-    with open(file_data, "r", encoding="UTF-8") as file_data:
+    with open(f, "r", encoding="UTF-8") as file_data:
         lines = file_data.readlines()
         s = False
         for i in range(len(lines)):
             contact = lines[i].strip().split(", ")
             contact_name1 = contact[0].strip()
-            contact_name2 = contact[1].strip()
-            if update_name1 == contact_name1 and update_name2 == contact_name2:
+            # contact_name2 = contact[1].strip()
+            if update_name1 == contact_name1:
+            # and update_name2 == contact_name2:
                 new_name1 = input("Введите новое имя: ")       
                 new_name2 = input("Введите новую фамилию: ")    
                 new_phone = input("Введите новый телефон: ")    
-            contact[0] = new_name1
-            contact[1] = new_name2
-            contact[2] = new_phone
-            lines[i] = ','.join(contact)+"\n"
-            s=True
-            break
+                contact[0] = new_name1
+                contact[1] = new_name2
+                contact[2] = new_phone
+                lines[i] = ','.join(contact)+"\n"
+                s=True
+                break
         if s:
-            with open(file_data, "w", encoding="UTF-8") as file_data:
+            with open(f, "w", encoding="UTF-8") as file_data:
                 file_data.writelines(lines) #???
             print("Контакт успешно обнавлен")
         else:
@@ -54,17 +55,18 @@ def Print4():
 
 
 def Print5():
-    file_data = Path("Telephone_directory.txt")
+    f= Path("Telephone_directory.txt")
     del_name1 = input("Введите имя контакта который хотите удалить: ")
     del_name2 = input("Введите фамилию контакта который хотите удалить: ")
-    with open(file_data, "r", encoding="UTF-8") as file_data:
+    with open(f, "r", encoding="UTF-8") as file_data:
         lines = file_data.readlines()
-    with open(file_data, "w", encoding="UTF-8") as file_data:
+    with open(f, "w", encoding="UTF-8") as file_data:
         s = False
         for line in lines:
             contact = line.strip().split(", ")
+            print(contact)
             if not ((del_name1 in contact) and (del_name2 in contact)):
-                file_data.write(line) #?????
+                file_data.write(line)
             else:
                 s=True
         if s:
